@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -36,7 +37,9 @@ public class Employee implements Serializable {
     @Column(length = 150, unique = true)
     private String email;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date birthDate;
+    private Date birthDate; 
+    @ManyToOne
+    private Departement departement;
 
     public Long getId() {
         return id;
@@ -128,6 +131,20 @@ public class Employee implements Serializable {
      */
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    /**
+     * @return the departement
+     */
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    /**
+     * @param departement the departement to set
+     */
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
     }
 
 }

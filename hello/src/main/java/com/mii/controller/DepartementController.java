@@ -5,8 +5,8 @@
  */
 package com.mii.controller;
 
-import com.mii.entity.Employee;
-import com.mii.services.EmployeeService;
+import com.mii.entity.Departement;
+import com.mii.services.DepartementService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,34 +20,34 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Hendro Steven
  */
 @RestController
-@RequestMapping("/api/employee")
-public class EmployeeController {
+@RequestMapping("/api/departement")
+public class DepartementController {
 
     @Autowired
-    private EmployeeService employeeService;
+    private DepartementService departementService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Employee insertNewEmployee(@RequestBody Employee employee) {
-        return employeeService.insertNewEmployee(employee);
+    public Departement insertNewDepartement(@RequestBody Departement dep) {
+        return departementService.insertNewDepartement(dep);
     }
 
-    @RequestMapping(method = RequestMethod.GET) 
-    public List<Employee> findAllEmployee() {
-        return employeeService.findAllEmployee();
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Departement> findAllDepartement() {
+        return departementService.findAllDepartement();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Employee findEmployeeById(@PathVariable("id") Long id) {
-        return employeeService.findEmployeeById(id);
+    public Departement findDepartementById(@PathVariable("id") Long id) {
+        return departementService.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Employee updateEmployee(@RequestBody Employee employee) {
-        return employeeService.updateEmployee(employee);
+    public Departement updateDepartement(@RequestBody Departement departement) {
+        return departementService.updateDepartement(departement);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public boolean removeEmployeeById(@PathVariable("id") Long id) {
-        return employeeService.removeEmployee(id);
+    public boolean removeDepartementById(@PathVariable("id") Long id) {
+        return departementService.removeDepartement(id);
     }
 }
