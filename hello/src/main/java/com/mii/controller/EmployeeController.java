@@ -5,6 +5,7 @@
  */
 package com.mii.controller;
 
+import com.mii.dto.SearchForm;
 import com.mii.entity.Employee;
 import com.mii.services.EmployeeService;
 import java.util.List;
@@ -31,7 +32,7 @@ public class EmployeeController {
         return employeeService.insertNewEmployee(employee);
     }
 
-    @RequestMapping(method = RequestMethod.GET) 
+    @RequestMapping(method = RequestMethod.GET)
     public List<Employee> findAllEmployee() {
         return employeeService.findAllEmployee();
     }
@@ -43,11 +44,27 @@ public class EmployeeController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public Employee updateEmployee(@RequestBody Employee employee) {
-        return employeeService.updateEmployee(employee);
+        return employeeService.updateEmployee(employee); 
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public boolean removeEmployeeById(@PathVariable("id") Long id) {
         return employeeService.removeEmployee(id);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/departement/{id}")
+    public List<Employee> findByDepartementId(@PathVariable("id") Long id) {
+        return employeeService.findByDepartementId(id);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public List<Employee> findByName(@RequestBody SearchForm form) {
+        return employeeService.findByName(form.getSearchKey());
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/birtdaymonth/{month}")
+    public List<Employee> findByBirthDateMonth(@PathVariable("month") int month) {
+        return employeeService.findByBirthDateMonth(month);
+    }
+
 }

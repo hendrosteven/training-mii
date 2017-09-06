@@ -23,7 +23,7 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepo employeeRepo;
- 
+
     public Employee insertNewEmployee(Employee employee) {
         return employeeRepo.save(employee);
     }
@@ -43,6 +43,18 @@ public class EmployeeService {
     public boolean removeEmployee(Long id) {
         employeeRepo.delete(id);
         return true;
+    }
+
+    public List<Employee> findByDepartementId(Long departementId) {
+        return employeeRepo.findByDepartementId(departementId);
+    }
+
+    public List<Employee> findByName(String name) {
+        return employeeRepo.findByName("%" + name + "%");
+    }
+
+    public List<Employee> findByBirthDateMonth(int month) {
+        return employeeRepo.findByBirthDayMonth(month);
     }
 
 }
