@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {Employee} from "../interface/employee";
 import {EmployeeService} from "../services/employee.service";
 import {DepartementService} from "../services/departement.service";
 import {Departement} from "../interface/departement";
+import {NgProgressService} from "ngx-progressbar";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 @Component({selector: 'app-employee-list', templateUrl: './employee-list.component.html', styleUrls: ['./employee-list.component.css']})
 export class EmployeeListComponent {
@@ -15,47 +17,41 @@ export class EmployeeListComponent {
   insertNew : boolean = false;
   isEdit: boolean = false;
 
-  constructor(private employeeService : EmployeeService, private departementService : DepartementService) {
-    this.loadEmployeeData();
-    this.loadDepartement();
+  constructor(private employeeService : EmployeeService, 
+    private departementService : DepartementService,
+    public progressService: NgProgressService,
+    private toastr: ToastsManager, 
+    private _vcr: ViewContainerRef) {
+
+    this.loadEmployeeData();   
+    this.toastr.setRootViewContainerRef(_vcr);
   }
 
-  loadDepartement() {
-    this
-      .departementService
-      .findAllDepartement()
-      .subscribe(output => {
-        console.log(output);
-        this.departements = output;
-      }, error => {
-        this.isError = true;
-        this.error = error;
-        console.log(error);
-      });
-  }
 
   loadEmployeeData() {
+    this.progressService.start();
     this
       .employeeService
       .findAllEmployee()
       .subscribe(output => {
+        this.progressService.done();
         console.log(output);
         this.employees = output;
       }, error => {
+        this.progressService.done();
         this.isError = true;
         this.error = error;
         console.log(error);
       });
   }
 
-  onRemoveEmployee(id : string) {
-    console.log(id);
+  onRemoveEmployee(id : string) {    
     this
       .employeeService
       .deleteEmployee(id)
       .subscribe(data => {
         if (data) {
-          //show pesan
+          this.toastr.success('Employee deleted.', null, {toastLife: 3000});         
           this.loadEmployeeData();
         }
       }, error => {
@@ -65,29 +61,7 @@ export class EmployeeListComponent {
       })
   }
 
-  onInsertNewEmployee() {
-    if (!this.isEdit) {
-      this
-        .employeeService
-        .saveNewEmployee(this.newEmployee)
-        .subscribe(output => {
-          console.log(output);
-          this
-            .employees
-            .push(output);
-          this.newEmployee = new Employee();
-          this.insertNew = false;
-        }, error => {
-          this.isError = true;
-          this.error = error;
-          console.log(error);
-        });
-    } else {
-      this.onUpdateEmployee();
-    }
-
-  }
-
+  
   onUpdateEmployee() {
     this
       .employeeService

@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="col-lg-4"></div>
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Please Login</div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label>Email:</label>
+          <input type="text" class="form-control" [(ngModel)]="login.username">
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" class="form-control" [(ngModel)]="login.password">
+        </div>
+        <p><a (click)="onProcessLogin()" class="btn btn-success">Login</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4"></div>
+</div>

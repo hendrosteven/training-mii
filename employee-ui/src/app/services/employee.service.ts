@@ -11,23 +11,39 @@ export class EmployeeService {
     constructor(private http : Http) {}
 
     findAllEmployee() {
+        let headers = new Headers({
+            'Content-Type': 'application/json', 
+            'Cache-Control': 'no-cache',
+            'Authorization': 'Basic ' + localStorage.getItem('token') 
+        });
+        let options = new RequestOptions({headers: headers});
         return this
             .http
-            .get(url)
+            .get(url,options)
             .map(res => res.json())
             .catch(this.handleError);
     }
 
     deleteEmployee(id : string) {
+        let headers = new Headers({
+            'Content-Type': 'application/json', 
+            'Cache-Control': 'no-cache',
+            'Authorization': 'Basic ' + localStorage.getItem('token') 
+        });
+        let options = new RequestOptions({headers: headers});
         return this
             .http
-            .delete(url + '/' + id)
+            .delete(url + '/' + id, options)
             .map(res => res.json())
             .catch(this.handleError);
     }
 
     saveNewEmployee(employee) {
-        let headers = new Headers({'Content-Type': 'application/json', 'Cache-Control': 'no-cache'});
+        let headers = new Headers({
+            'Content-Type': 'application/json', 
+            'Cache-Control': 'no-cache',
+            'Authorization': 'Basic ' + localStorage.getItem('token') 
+        });
         let options = new RequestOptions({headers: headers});
         return this
             .http
@@ -37,7 +53,11 @@ export class EmployeeService {
     }
 
     updateEmployee(employee) {
-        let headers = new Headers({'Content-Type': 'application/json', 'Cache-Control': 'no-cache'});
+        let headers = new Headers({
+            'Content-Type': 'application/json', 
+            'Cache-Control': 'no-cache',
+            'Authorization': 'Basic ' + localStorage.getItem('token') 
+        });
         let options = new RequestOptions({headers: headers});
         return this
             .http
