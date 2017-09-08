@@ -15,12 +15,14 @@ import { EmployeeInputComponent } from './employee-input/employee-input.componen
 import { LoginComponent } from './login/login.component';
 import {AuthGuard} from "./guards/auth.guard";
 import {LoginService} from "./services/login.service";
+import { RegisterComponent } from './register/register.component';
 
 export const AppRoutes : any = [
   { path: "", component: AppComponent},
   { path: "login", component: LoginComponent},
   { path: "list-employee", component: EmployeeListComponent, canActivate: [AuthGuard] },
   { path: "insert-employee", component: EmployeeInputComponent, canActivate: [AuthGuard] },
+  { path: "register", component: RegisterComponent},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];
@@ -30,7 +32,8 @@ export const AppRoutes : any = [
     AppComponent,
     EmployeeListComponent,
     EmployeeInputComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     HttpModule,

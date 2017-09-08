@@ -21,7 +21,9 @@ export class AppComponent {
   }
 
   onRegister(){
-
+    this
+    .router
+    .navigate(["register"]);
   }
 
   logout(){
